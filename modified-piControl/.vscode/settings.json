@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "comp_packbegin.h": "c",
+        "common_define.h": "c",
+        "ioprotocol.h": "c",
+        "revpi_common.h": "c"
+    }
+}
