@@ -14,20 +14,28 @@
 #include "revpi_gate.h"
 #include "piControlMain.h"
  
+#define DEBUG_SESSION
 
 SDeviceInfo *dev_infos;
+INT8U devcount = 0;
 
 
 int dd_write_to_process_image(INT8U* array, INT16U len, INT8U* image_ready) {
 
     INT8U device_num = array[0];
-    INT8U cum_plen = 0, index, dev, addr, in_out, plen, devcount = 0;
+    INT8U cum_plen = 0, index, dev, addr, in_out, plen, status;
+
+    pr_err("\n");
+    for (index = 0; index < sizeof(array); index++){
+        pr_err("%d ", array[index]);
+    }
+    pr_err("\n");
 
 
     if (*image_ready != 1){
 
         devcount = RevPiDevice_getDevCnt();
-        pr_err("devcount = %d\n", devcount);
+        //pr_err("devcount = %d\n", devcount);
 	    if (devcount < 0) {
             pr_err("Cannot retrieve device list\n");
 		    return DD_FAILED;
@@ -57,20 +65,14 @@ int dd_write_to_process_image(INT8U* array, INT16U len, INT8U* image_ready) {
             plen = (INT8U)(array[IO_ENTRY_INDEX+cum_plen+1] & DATA_LENGTH_MASK);
             dev = ((index-1)/2 + 1);
             
-            if (dd_write_process_data(dev_infos[dev], addr, in_out, &array[IO_ENTRY_INDEX+cum_plen+HEADER_IO_PKT_SIZE], plen) != DD_SUCCESS) {
-
+            status = dd_write_process_data(dev_infos[dev], addr, in_out, &array[IO_ENTRY_INDEX+cum_plen+HEADER_IO_PKT_SIZE], plen);
+            if ( status != DD_SUCCESS) {
                 *image_ready = 0;
                 kfree(dev_infos);
                 return DD_FAILED;
             }
-
-            cum_plen += (plen + HEADER_IO_PKT_SIZE);
-
-            /*
-            pr_err("addr %d, in_out %d, plen %d, cum_plen %d, dev %d len %d\n",addr,in_out,plen,cum_plen,dev,len);
-            for(j=0;j<plen;j++){
-                pr_err("io_pd_packet[%d]=%d\n",j,io_pd_packet[j]);
-            } */
+            
+            cum_plen += (plen + HEADER_IO_PKT_SIZE); 
 
         } 
         
@@ -106,12 +108,27 @@ int dd_write_process_data(SDeviceInfo device, INT8U addr, INT8U in_out, INT8U* i
 			memcpy(&piDev_g.ai8uPI[device.i16uOutputOffset], io_pd_packet, plen);	
 	        rt_mutex_unlock(&piDev_g.lockPI);
 
+#ifdef DEBUG_SESSION
+            if (io_pd_packet[0] != 0x00) {
+                rt_mutex_lock(&piDev_g.lockPI); 
+			    memset(&piDev_g.ai8uPI[119], 0x40, 1);	//119 is the offset of variable RevPiLED, change bit 6 to 
+	            rt_mutex_unlock(&piDev_g.lockPI);
+            }else{
+                rt_mutex_lock(&piDev_g.lockPI); 
+			    memset(&piDev_g.ai8uPI[119], 0x00, 1);	//119 is the offset of variable RevPiLED, change bit 6 to 
+	            rt_mutex_unlock(&piDev_g.lockPI);      
+            }
+
+#endif
+        
+
         }
         else if ((in_out == IO_PKT_RESPONSE_BIT)&&(plen <= device.i16uInputLength)){
 
             rt_mutex_lock(&piDev_g.lockPI); 
 			memcpy(&piDev_g.ai8uPI[device.i16uInputOffset], io_pd_packet, plen);	
 	        rt_mutex_unlock(&piDev_g.lockPI);
+
         } else {
             return DD_FAILED;
         }
