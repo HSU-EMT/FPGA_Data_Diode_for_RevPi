@@ -22,20 +22,17 @@ INT8U devcount = 0;
 
 int dd_write_to_process_image(INT8U* array, INT16U len, INT8U* image_ready) {
 
-    INT8U device_num = array[0];
-    INT8U cum_plen = 0, index, dev, addr, in_out, plen, status;
+    INT8U device_num = (INT8U)(array[0] & DEVICE_NUM_MASK);
+    INT8U gateway_present = (INT8U)(array[0] & GATEWAY_PRESENT_MASK >> 7); // 1 means present
+    INT8U index, dev, addr, in_out, status;
+    INT16U cum_plen = 0, plen = 0;
 
-    pr_err("\n");
-    for (index = 0; index < sizeof(array); index++){
-        pr_err("%d ", array[index]);
-    }
-    pr_err("\n");
 
 
     if (*image_ready != 1){
 
         devcount = RevPiDevice_getDevCnt();
-        //pr_err("devcount = %d\n", devcount);
+        
 	    if (devcount < 0) {
             pr_err("Cannot retrieve device list\n");
 		    return DD_FAILED;
@@ -56,13 +53,14 @@ int dd_write_to_process_image(INT8U* array, INT16U len, INT8U* image_ready) {
         //dd_print_connected_device_info(devcount, dev_infos); //test
         *image_ready = 1;
     }
-    
+
+
     if (*image_ready == 1) {
-        for (index = 1; index <= 2*(devcount-1); index++) { // count from 1 because the controller is ignored
+        for (index = 1; index <= 2*(devcount-1-gateway_present); index++) { // count from 1 because the controller is ignored
             
             addr = (INT8U)(array[IO_ENTRY_INDEX+cum_plen] & ADDRESS_MASK);  //ignored first 1 bytes of header (dev num)
             in_out = (INT8U)((array[IO_ENTRY_INDEX+cum_plen] & RESPONSE_MASK) >> 7); //request or response packet
-            plen = (INT8U)(array[IO_ENTRY_INDEX+cum_plen+1] & DATA_LENGTH_MASK);
+            plen = (INT16U)(array[IO_ENTRY_INDEX+cum_plen+1] & DATA_LENGTH_MASK);
             dev = ((index-1)/2 + 1);
             
             status = dd_write_process_data(dev_infos[dev], addr, in_out, &array[IO_ENTRY_INDEX+cum_plen+HEADER_IO_PKT_SIZE], plen);
@@ -75,8 +73,40 @@ int dd_write_to_process_image(INT8U* array, INT16U len, INT8U* image_ready) {
             cum_plen += (plen + HEADER_IO_PKT_SIZE); 
 
         } 
+        if (gateway_present){
+            for (index = 0; index <= 1; index++){
+
+                addr = (INT8U)(array[IO_ENTRY_INDEX+cum_plen] & ADDRESS_MASK);
+                in_out = (INT8U)((array[IO_ENTRY_INDEX+cum_plen] & RESPONSE_MASK) >> 7);
+                plen = (INT16U)((array[IO_ENTRY_INDEX+cum_plen+2] << 8 ) | array[IO_ENTRY_INDEX+cum_plen+1]);
+
+                status = dd_write_process_data(dev_infos[devcount-1], addr, in_out, &array[IO_ENTRY_INDEX+cum_plen+HEADER_GATEWAY_PKT_SIZE], plen);
+                if ( status != DD_SUCCESS) {
+                    *image_ready = 0;
+                    kfree(dev_infos);
+                    return DD_FAILED;
+                }
+                cum_plen += (plen + HEADER_GATEWAY_PKT_SIZE); 
+
+            }
+
+        }
+
+
+#ifdef DEBUG_SESSION
+        if (array[IO_ENTRY_INDEX+HEADER_GATEWAY_PKT_SIZE] != 0x00) { //change first byte in packet payload of gateway
+            rt_mutex_lock(&piDev_g.lockPI); 
+			memset(&piDev_g.ai8uPI[dev_infos[0].i16uOutputOffset], 0x40, 1);	// is the offset of variable RevPiLED, change bit 6 to 
+	        rt_mutex_unlock(&piDev_g.lockPI);
+        }else{
+            rt_mutex_lock(&piDev_g.lockPI); 
+			memset(&piDev_g.ai8uPI[dev_infos[0].i16uOutputOffset], 0x00, 1);	// is the offset of variable RevPiLED, change bit 6 to 
+	        rt_mutex_unlock(&piDev_g.lockPI);      
+        }
+
+#endif
+
         
-    
         if ((cum_plen + 1) > len) {
             pr_err("The number of elements in data array is not correct\n");
             *image_ready = 0;
@@ -106,21 +136,7 @@ int dd_write_process_data(SDeviceInfo device, INT8U addr, INT8U in_out, INT8U* i
 
             rt_mutex_lock(&piDev_g.lockPI); 
 			memcpy(&piDev_g.ai8uPI[device.i16uOutputOffset], io_pd_packet, plen);	
-	        rt_mutex_unlock(&piDev_g.lockPI);
-
-#ifdef DEBUG_SESSION
-            if (io_pd_packet[0] != 0x00) {
-                rt_mutex_lock(&piDev_g.lockPI); 
-			    memset(&piDev_g.ai8uPI[119], 0x40, 1);	//119 is the offset of variable RevPiLED, change bit 6 to 
-	            rt_mutex_unlock(&piDev_g.lockPI);
-            }else{
-                rt_mutex_lock(&piDev_g.lockPI); 
-			    memset(&piDev_g.ai8uPI[119], 0x00, 1);	//119 is the offset of variable RevPiLED, change bit 6 to 
-	            rt_mutex_unlock(&piDev_g.lockPI);      
-            }
-
-#endif
-        
+	        rt_mutex_unlock(&piDev_g.lockPI);     
 
         }
         else if ((in_out == IO_PKT_RESPONSE_BIT)&&(plen <= device.i16uInputLength)){

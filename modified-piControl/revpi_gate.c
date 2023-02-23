@@ -29,6 +29,7 @@
 #define MG_AL_SEND	msecs_to_jiffies(20)
 #define KS8851_FIFO_SZ	(12 * SZ_1K)
 
+//#define DELAY_MESSURE
 static bool data_diode_mode = false;
 static INT8U image_ready = 0, status;
 
@@ -343,6 +344,22 @@ static int revpi_gate_process_cyclicpd(struct sk_buff *rcv,
 			if (skb) 
 				memcpy(al->i8uData, conn->out, conn->out_len);
 			rt_mutex_unlock(&piDev_g.lockPI);
+
+#ifdef DELAY_MESSURE
+			pr_err("rcv_al->i8uData[3] %d\n",rcv_al->i8uData[3]);
+            if (rcv_al->i8uData[3] != 0x00) {
+                rt_mutex_lock(&piDev_g.lockPI); 
+			    memset(&piDev_g.ai8uPI[1143], 0x40, 1);	//119 is the offset of variable RevPiLED, change bit 6 to 
+	            rt_mutex_unlock(&piDev_g.lockPI);
+            }else{
+                rt_mutex_lock(&piDev_g.lockPI); 
+			    memset(&piDev_g.ai8uPI[1143], 0x00, 1);	//119 is the offset of variable RevPiLED, change bit 6 to 
+	            rt_mutex_unlock(&piDev_g.lockPI);      
+            }
+
+#endif
+
+
 		} else {
 			if (skb)
 				memset(al->i8uData, 0, conn->out_len);
@@ -404,7 +421,7 @@ static int revpi_gate_process_id_resp(struct sk_buff *rcv,    //////Master recei
 	if (rcv_al->i16uModulType == EMT_DATA_DIODE) {
 
 		data_diode_mode = true;
-		piDev_g.stopIO = true; // don't update process data from conventional pibridge anymore, but from data diode packet
+		//piDev_g.stopIO = true; // don't update process data from conventional pibridge anymore, but from data diode packet
 		conn->in_len = min(DATA_DIODE_PD_MAX_LEN, rcv_al->i16uFBS_OutputLength); //byte size send by data diode
 		conn->out_len = min(DATA_DIODE_PD_MAX_LEN, rcv_al->i16uFBS_InputLength); //byte size received by data diode to acknownledge the transmittion
 

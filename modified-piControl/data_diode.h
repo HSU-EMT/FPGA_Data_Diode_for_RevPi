@@ -15,11 +15,14 @@
 #define DATA_LENGTH_MASK 							0x1F //last 5 bits
 #define COMMAND_MASK 							    0xE0 //first 3 bits
 #define RESPONSE_MASK 							    0x80 //first 1 bits
+#define GATEWAY_PRESENT_MASK 						0x80 //first 1 bits
+#define DEVICE_NUM_MASK 						    0x7F //last 7 bits
 
 #define IO_PKT_REQUEST_BIT                          0
 #define IO_PKT_RESPONSE_BIT                         1
 
 #define HEADER_IO_PKT_SIZE 							2
+#define HEADER_GATEWAY_PKT_SIZE 					3
 #define IO_ENTRY_INDEX               		        1
 
 
