@@ -5,8 +5,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/images/Logo_Emt.png">
-    <img src="https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/images/Logo_Emt.png" alt="Logo" width="180" height="80">
+  <a href="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/tree/main/others//images/Logo_Emt.png">
+    <img src="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/tree/main/others//images/Logo_Emt.png" alt="Logo" width="180" height="80">
   </a>
 
   <h3 align="center">A New Approach to Secure Industrial Automation Systems Based on Revolution Pi Modules</h3>
@@ -117,8 +117,8 @@ For more details, please refer to the [Documentation](https://github.com/HSU-EMT
 
 1. First, the RevPi modules are connected together via [PiBridge](https://revolutionpi.com/pibridge/). The figure below is the PiBridge connector and its pin assignment. A total of 3 PiBridge connectors are required. In which 2 connectors are uncapped so that they can be soldered to wires.
 <div align="center">
-  <a href="https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/images/pin.jpg">
-    <img src="https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/images/pin.jpg" alt="pin" width="700" height="350">
+  <a href="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/tree/main/others/images/pin.jpg">
+    <img src="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/tree/main/others/images/pin.jpg" alt="pin" width="700" height="350">
   </a>
 </div>
 
