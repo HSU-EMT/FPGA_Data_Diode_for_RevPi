@@ -118,7 +118,7 @@ For more details, please refer to the [Documentation](https://github.com/HSU-EMT
 1. First, the RevPi modules are connected together via [PiBridge](https://revolutionpi.com/pibridge/). The figure below is the PiBridge connector and its pin assignment. A total of 3 PiBridge connectors are required. In which 2 connectors are uncapped so that they can be soldered to wires.
 <div align="center">
   <a href="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/blob/main/others/images/pin.jpg">
-    <img src="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/blob/main/others/images/pin.jpg" alt="pin" width="700" height="350">
+    <img src="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/blob/main/others/images/pin.jpg" alt="pin" width="200" height="350">
   </a>
 </div>
 
