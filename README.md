@@ -122,19 +122,14 @@ For more details, please refer to the [Documentation](https://github.com/HSU-EMT
   </a>
 </div>
 
-2. The diagram below shows how hardware devices are connected to each other. The author recommends readers to go through manual reference of the Zybo Z7-20 board [here](https://digilent.com/reference/programmable-logic/zybo-z7/reference-manual?redirect=1) and RS-485 Pmod [here](https://digilent.com/reference/pmod/pmodrs485/reference-manual) so that the diagram below can be easily understood. JF, JD or JC are the Pmod ports on the board. Where 0, 9, 10 and 13 are the numbers of the used pins. The Pibridge pins are connected to Revpi modules or soldered to wires. The other end of these wires is connected to the pins of the Pmod ports or the pins of the RS-485 Pmods. Two 100kOhm resistors are used to create the pull-down connections. Two RevPi Connect have been selected as controller modules, denoted as PLC and PLC-Mirror (PLCM). A RevPi DIO module is connected to the PLC on the left side.
+2. The diagram below shows how hardware devices are connected to each other. The author recommends readers to go through manual reference of the Zybo Z7-20 board [here](https://digilent.com/reference/programmable-logic/zybo-z7/reference-manual?redirect=1).
 
 <div align="center">
-  <a href="https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/images/schema.jpg">
-    <img src="https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/images/schema.jpg" alt="schema" width="700" height="350">
+  <a href="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/blob/main/others/images/diagram.png">
+    <img src="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/blob/main/others/images/diagram.png" alt="schema" width="700" height="350">
   </a>
 </div>
 
-<div align="center">
-  <a href="https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/images/hardwares.jpg">
-    <img src="https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/images/hardwares.jpg" alt="hardwares" width="700" height="400">
-  </a>
-</div>
 
 3. [Power supply](https://revolutionpi.com/tutorials/uebersicht-revpi-connect/spannungsversorgung-anschliessen-connect/) for circuit boards and RevPi devices. Connect 2 controller modules via LAN cable to your laptop to be able to configure RevPi modules in PiCtory. See [here](https://revolutionpi.com/tutorials/uebersicht-revpi-connect/) and [here](https://revolutionpi.com/tutorials/was-ist-pictory-2/) for more details.
 
