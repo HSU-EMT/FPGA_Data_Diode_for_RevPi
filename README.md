@@ -14,7 +14,7 @@
   <p align="center">
     A puplication at ETFA2022
     <br />
-    <a href="https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/doc/README.md"><strong>Explore the paper »</strong></a>
+    <a href="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/tree/main/others/paper"><strong>Explore the paper »</strong></a>
     <br />
   </p>
 </div>
