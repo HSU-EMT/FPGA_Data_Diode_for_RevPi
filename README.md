@@ -12,7 +12,7 @@
   <h3 align="center">A New Approach to Secure Industrial Automation Systems Based on Revolution Pi Modules</h3>
 
   <p align="center">
-    A puplication at ETFA2022
+    A puplication at ...
     <br />
     <a href="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/tree/main/others/paper"><strong>Explore the paper »</strong></a>
     <br />
@@ -52,9 +52,26 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-There are many data diodes products on the market. Most of them are Ethernet based with high bandwidth and bound to a specific protocol or manufacturer. They are often used to connect 2 complex OT and IT network. In cases where the OT network or the areas that need to be completely isolated within the OT network are small, the use of these data diodes often leads to increased configuration requirements, inefficiency and high costs. Another aspect to consider is the flexibility of data diodes of this type. In most cases, security must be considered from the beginning and maintained throughout all phases of system and network development. This means that these data diode cannot be added to an existing network without changing the network architecture.
-
-The concept proposed here can solve the above problems of existing data diodes. It employs this open source and with comparably low resources customized data diode using the backplane bus of the [Revolution Pi](https://github.com/RevolutionPi) (RevPi) automation system to exchange data.
+A new FPGA based approach for a data diode
+transmitting data unidirectionally from a high security zone
+to a lower security zone has been evaluated and implemented.
+With the FPGA implementation, the need of additional hardware
+could be minimized compared to most state-of-the-art data
+diode realizations. The proposed data diode is designed to use
+the available backplane bus communication protocol between
+the programmable logic controller (PLC) and its connected
+peripherals. To demonstrate the universal approach an opensource
+platform based on the Revolution Pi (RevPi) and its
+backplane bus has been used. Principally the data diode behaves
+as a mirror presenting the complete protected system behind the
+high security zone including the RevPi PLC controller and its
+devices to the IT network. Another controller within the lower
+security zone is used to imitate the OT process. Our approach
+is not limited to the above controller and can be applied to any
+type of programmable logic controller. The only requirement is
+that the communication protocol on the backplane bus is known
+and can be modified if needed, which is usually the case for the
+PLC manufacturer or if an Open PLC is employed.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
