@@ -1,0 +1,66 @@
+WORKFLOW_OPERATION simulation,dialog;
+
+DEFINE_MEMORY_TYPE microblaze_PLCM_local_memory_lmb_bram_128K_1_MEM_DEVICE [0x00020000] 32;
+DEFINE_MEMORY_TYPE MDBRAM_PLCM_PLC_RS485_Shared_Memory_PLCM_PLC_RS485_MEM_DEVICE [0x00002000] 32;
+DEFINE_MEMORY_TYPE MDBRAM_PLCM_PLC_Ethernet_Shared_Memory_PLCM_PLC_Ethernet_MEM_DEVICE [0x00002000] 32;
+DEFINE_MEMORY_TYPE microblaze_PLC_Ethernet_local_memory_lmb_bram_MEM_DEVICE [0x00020000] 32;
+DEFINE_MEMORY_TYPE Shared_Memory_PLC_MEM_DEVICE [0x00002000] 32;
+DEFINE_MEMORY_TYPE MDBRAM_PLCM_PLC_Ethernet_Shared_Memory_PLCM_PLC_Ethernet_8K_1_MEM_DEVICE [0x00002000] 32;
+DEFINE_MEMORY_TYPE microblaze_PLC_RS485_local_memory_lmb_bram_MEM_DEVICE [0x00020000] 32;
+DEFINE_MEMORY_TYPE MDBRAM_PLCM_PLC_RS485_Shared_Memory_PLCM_PLC_RS485_8K_1_MEM_DEVICE [0x00002000] 32;
+DEFINE_MEMORY_TYPE Shared_Memory_PLC_8K_1_MEM_DEVICE [0x00002000] 32;
+
+ADDRESS_MAP microblaze_PLCM MICROBLAZE-LE 100 microblaze_PLCM
+   ADDRESS_SPACE microblaze_PLCM_local_memory_lmb_bram_128K_1_ADDR_SPACE microblaze_PLCM_local_memory_lmb_bram_128K_1_MEM_DEVICE  [0x00000000:0x0001FFFF] microblaze_PLCM_local_memory/dlmb_bram_if_cntlr
+     BUS_BLOCK
+      microblaze_PLCM_local_memory_lmb_bram_128K_1_BUS_BLK [31:0] INPUT = "design_1_lmb_bram_1.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+   ADDRESS_SPACE MDBRAM_PLCM_PLC_RS485_Shared_Memory_PLCM_PLC_RS485_ADDR_SPACE MDBRAM_PLCM_PLC_RS485_Shared_Memory_PLCM_PLC_RS485_MEM_DEVICE  [0xC0000000:0xC0001FFF] axi_bram_ctrl_1_PLCM
+     BUS_BLOCK
+      MDBRAM_PLCM_PLC_RS485_Shared_Memory_PLCM_PLC_RS485_BUS_BLK [31:0] INPUT = "design_1_blk_mem_gen_0_0.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+   ADDRESS_SPACE MDBRAM_PLCM_PLC_Ethernet_Shared_Memory_PLCM_PLC_Ethernet_ADDR_SPACE MDBRAM_PLCM_PLC_Ethernet_Shared_Memory_PLCM_PLC_Ethernet_MEM_DEVICE  [0xC2000000:0xC2001FFF] axi_bram_ctrl_2_PLCM
+     BUS_BLOCK
+      MDBRAM_PLCM_PLC_Ethernet_Shared_Memory_PLCM_PLC_Ethernet_BUS_BLK [31:0] INPUT = "design_1_Shared_Memory_PLCM_PLC_RS485_0.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+END_ADDRESS_MAP;
+
+ADDRESS_MAP microblaze_PLC_Ethernet MICROBLAZE-LE 100 microblaze_PLC_Ethernet
+   ADDRESS_SPACE microblaze_PLC_Ethernet_local_memory_lmb_bram_ADDR_SPACE microblaze_PLC_Ethernet_local_memory_lmb_bram_MEM_DEVICE  [0x00000000:0x0001FFFF] microblaze_PLC_Ethernet_local_memory/dlmb_bram_if_cntlr
+     BUS_BLOCK
+      microblaze_PLC_Ethernet_local_memory_lmb_bram_BUS_BLK [31:0] INPUT = "design_1_lmb_bram_2.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+   ADDRESS_SPACE Shared_Memory_PLC_ADDR_SPACE Shared_Memory_PLC_MEM_DEVICE  [0xC1000000:0xC1001FFF] axi_bram_ctrl_PLC_Ethernet_2
+     BUS_BLOCK
+      Shared_Memory_PLC_BUS_BLK [31:0] INPUT = "design_1_Shared_Memory_PLCM_PLC_RS485_1.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+   ADDRESS_SPACE MDBRAM_PLCM_PLC_Ethernet_Shared_Memory_PLCM_PLC_Ethernet_8K_1_ADDR_SPACE MDBRAM_PLCM_PLC_Ethernet_Shared_Memory_PLCM_PLC_Ethernet_8K_1_MEM_DEVICE  [0xC2000000:0xC2001FFF] axi_bram_ctrl_PLC_Ethernet
+     BUS_BLOCK
+      MDBRAM_PLCM_PLC_Ethernet_Shared_Memory_PLCM_PLC_Ethernet_8K_1_BUS_BLK [31:0] INPUT = "design_1_Shared_Memory_PLCM_PLC_RS485_0.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+END_ADDRESS_MAP;
+
+ADDRESS_MAP microblaze_PLC_RS485 MICROBLAZE-LE 100 microblaze_PLC_RS485
+   ADDRESS_SPACE microblaze_PLC_RS485_local_memory_lmb_bram_ADDR_SPACE microblaze_PLC_RS485_local_memory_lmb_bram_MEM_DEVICE  [0x00000000:0x0001FFFF] microblaze_PLC_RS485_local_memory/dlmb_bram_if_cntlr
+     BUS_BLOCK
+      microblaze_PLC_RS485_local_memory_lmb_bram_BUS_BLK [31:0] INPUT = "design_1_lmb_bram_0.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+   ADDRESS_SPACE MDBRAM_PLCM_PLC_RS485_Shared_Memory_PLCM_PLC_RS485_8K_1_ADDR_SPACE MDBRAM_PLCM_PLC_RS485_Shared_Memory_PLCM_PLC_RS485_8K_1_MEM_DEVICE  [0xC0000000:0xC0001FFF] axi_bram_ctrl_PLC_RS485
+     BUS_BLOCK
+      MDBRAM_PLCM_PLC_RS485_Shared_Memory_PLCM_PLC_RS485_8K_1_BUS_BLK [31:0] INPUT = "design_1_blk_mem_gen_0_0.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+   ADDRESS_SPACE Shared_Memory_PLC_8K_1_ADDR_SPACE Shared_Memory_PLC_8K_1_MEM_DEVICE  [0xC1000000:0xC1001FFF] axi_bram_ctrl_PLC_RS485_2
+     BUS_BLOCK
+      Shared_Memory_PLC_8K_1_BUS_BLK [31:0] INPUT = "design_1_Shared_Memory_PLCM_PLC_RS485_1.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+END_ADDRESS_MAP;
+
