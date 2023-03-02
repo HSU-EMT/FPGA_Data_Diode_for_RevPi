@@ -1,10 +1,10 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
--- Date        : Tue Sep 27 11:27:50 2022
+-- Date        : Tue Sep 27 11:27:49 2022
 -- Host        : DESKTOP-DRQ34CR running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim
---               c:/Zybo/_2_Version_Data_Diode/Combination_test1/data_diode_hardware/project_datadiode.srcs/sources_1/bd/design_1/ip/design_1_axi_quad_spi_PLCM_0/design_1_axi_quad_spi_PLCM_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top design_1_axi_quad_spi_PLCM_0 -prefix
+--               design_1_axi_quad_spi_PLCM_0_ design_1_axi_quad_spi_PLCM_0_sim_netlist.vhdl
 -- Design      : design_1_axi_quad_spi_PLCM_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -557,8 +557,6 @@ entity design_1_axi_quad_spi_PLCM_0_cdc_sync is
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to_0\ : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_cdc_sync : entity is "cdc_sync";
 end design_1_axi_quad_spi_PLCM_0_cdc_sync;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_cdc_sync is
@@ -2400,8 +2398,6 @@ entity design_1_axi_quad_spi_PLCM_0_counter_f is
     s_axi_aclk : in STD_LOGIC;
     \icount_out_reg[0]_0\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_counter_f : entity is "counter_f";
 end design_1_axi_quad_spi_PLCM_0_counter_f;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_counter_f is
@@ -2812,8 +2808,6 @@ entity design_1_axi_quad_spi_PLCM_0_interrupt_control is
     \LEGACY_MD_WR_RD_ACK_GEN.IP2Bus_RdAck_reg\ : in STD_LOGIC;
     E : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_interrupt_control : entity is "interrupt_control";
 end design_1_axi_quad_spi_PLCM_0_interrupt_control;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_interrupt_control is
@@ -3200,8 +3194,6 @@ entity design_1_axi_quad_spi_PLCM_0_qspi_cntrl_reg is
     \GEN_IP_IRPT_STATUS_REG[8].GEN_REG_STATUS.ip_irpt_status_reg_reg[8]_0\ : in STD_LOGIC;
     data_Exists_RcFIFO_int_d1 : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_qspi_cntrl_reg : entity is "qspi_cntrl_reg";
 end design_1_axi_quad_spi_PLCM_0_qspi_cntrl_reg;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_qspi_cntrl_reg is
@@ -3392,8 +3384,6 @@ entity design_1_axi_quad_spi_PLCM_0_qspi_fifo_ifmodule is
     p_5_in : in STD_LOGIC;
     Bus_RNW_reg : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_qspi_fifo_ifmodule : entity is "qspi_fifo_ifmodule";
 end design_1_axi_quad_spi_PLCM_0_qspi_fifo_ifmodule;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_qspi_fifo_ifmodule is
@@ -3519,8 +3509,6 @@ entity design_1_axi_quad_spi_PLCM_0_qspi_mode_0_module is
     D : in STD_LOGIC_VECTOR ( 2 downto 0 );
     \RATIO_OF_2_GENERATE.Shift_Reg_reg[1]_1\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_qspi_mode_0_module : entity is "qspi_mode_0_module";
 end design_1_axi_quad_spi_PLCM_0_qspi_mode_0_module;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_qspi_mode_0_module is
@@ -4981,8 +4969,6 @@ entity design_1_axi_quad_spi_PLCM_0_qspi_status_slave_sel_reg is
     p_4_in : in STD_LOGIC;
     Bus_RNW_reg : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_qspi_status_slave_sel_reg : entity is "qspi_status_slave_sel_reg";
 end design_1_axi_quad_spi_PLCM_0_qspi_status_slave_sel_reg;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_qspi_status_slave_sel_reg is
@@ -5033,8 +5019,6 @@ entity design_1_axi_quad_spi_PLCM_0_reset_sync_module is
     reset2ip_reset_int : in STD_LOGIC;
     ext_spi_clk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_reset_sync_module : entity is "reset_sync_module";
 end design_1_axi_quad_spi_PLCM_0_reset_sync_module;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_reset_sync_module is
@@ -5112,8 +5096,6 @@ entity design_1_axi_quad_spi_PLCM_0_soft_reset is
     \icount_out_reg[0]\ : in STD_LOGIC;
     D : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_soft_reset : entity is "soft_reset";
 end design_1_axi_quad_spi_PLCM_0_soft_reset;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_soft_reset is
@@ -5648,8 +5630,6 @@ entity design_1_axi_quad_spi_PLCM_0_xpm_cdc_gray is
   attribute DEST_SYNC_FF of design_1_axi_quad_spi_PLCM_0_xpm_cdc_gray : entity is 2;
   attribute INIT_SYNC_FF : integer;
   attribute INIT_SYNC_FF of design_1_axi_quad_spi_PLCM_0_xpm_cdc_gray : entity is 1;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_xpm_cdc_gray : entity is "xpm_cdc_gray";
   attribute REG_OUTPUT : integer;
   attribute REG_OUTPUT of design_1_axi_quad_spi_PLCM_0_xpm_cdc_gray : entity is 0;
   attribute SIM_ASSERT_CHK : integer;
@@ -9763,8 +9743,6 @@ entity design_1_axi_quad_spi_PLCM_0_xpm_cdc_sync_rst is
   attribute INIT of design_1_axi_quad_spi_PLCM_0_xpm_cdc_sync_rst : entity is "0";
   attribute INIT_SYNC_FF : integer;
   attribute INIT_SYNC_FF of design_1_axi_quad_spi_PLCM_0_xpm_cdc_sync_rst : entity is 1;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_xpm_cdc_sync_rst : entity is "xpm_cdc_sync_rst";
   attribute SIM_ASSERT_CHK : integer;
   attribute SIM_ASSERT_CHK of design_1_axi_quad_spi_PLCM_0_xpm_cdc_sync_rst : entity is 0;
   attribute VERSION : integer;
@@ -10042,8 +10020,6 @@ entity design_1_axi_quad_spi_PLCM_0_xpm_counter_updn is
     \gen_pf_ic_rc.gaf_ic.ram_afull_i_i_2_0\ : in STD_LOGIC_VECTOR ( 5 downto 0 );
     wr_clk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_xpm_counter_updn : entity is "xpm_counter_updn";
 end design_1_axi_quad_spi_PLCM_0_xpm_counter_updn;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_xpm_counter_updn is
@@ -14878,8 +14854,6 @@ entity design_1_axi_quad_spi_PLCM_0_xpm_fifo_reg_bit is
     prog_full : in STD_LOGIC;
     wr_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_xpm_fifo_reg_bit : entity is "xpm_fifo_reg_bit";
 end design_1_axi_quad_spi_PLCM_0_xpm_fifo_reg_bit;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_xpm_fifo_reg_bit is
@@ -15040,8 +15014,6 @@ entity design_1_axi_quad_spi_PLCM_0_xpm_fifo_reg_vec is
     D : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wr_clk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_xpm_fifo_reg_vec : entity is "xpm_fifo_reg_vec";
 end design_1_axi_quad_spi_PLCM_0_xpm_fifo_reg_vec;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_xpm_fifo_reg_vec is
@@ -16541,8 +16513,6 @@ entity design_1_axi_quad_spi_PLCM_0_xpm_memory_base is
   attribute MESSAGE_CONTROL of design_1_axi_quad_spi_PLCM_0_xpm_memory_base : entity is 0;
   attribute NUM_CHAR_LOC : integer;
   attribute NUM_CHAR_LOC of design_1_axi_quad_spi_PLCM_0_xpm_memory_base : entity is 0;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_xpm_memory_base : entity is "xpm_memory_base";
   attribute P_ECC_MODE : string;
   attribute P_ECC_MODE of design_1_axi_quad_spi_PLCM_0_xpm_memory_base : entity is "no_ecc";
   attribute P_ENABLE_BYTE_WRITE_A : integer;
@@ -17300,8 +17270,6 @@ entity design_1_axi_quad_spi_PLCM_0_address_decoder is
     s_axi_wready : in STD_LOGIC;
     s_axi_wready_0 : in STD_LOGIC_VECTOR ( 5 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_address_decoder : entity is "address_decoder";
 end design_1_axi_quad_spi_PLCM_0_address_decoder;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_address_decoder is
@@ -18804,8 +18772,6 @@ entity design_1_axi_quad_spi_PLCM_0_cross_clk_sync_fifo_1 is
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to_8\ : in STD_LOGIC;
     spicr_bits_7_8_frm_axi_clk : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_cross_clk_sync_fifo_1 : entity is "cross_clk_sync_fifo_1";
 end design_1_axi_quad_spi_PLCM_0_cross_clk_sync_fifo_1;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_cross_clk_sync_fifo_1 is
@@ -19277,8 +19243,6 @@ entity design_1_axi_quad_spi_PLCM_0_xpm_fifo_rst is
     \guf.underflow_i_reg\ : in STD_LOGIC;
     rd_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_xpm_fifo_rst : entity is "xpm_fifo_rst";
 end design_1_axi_quad_spi_PLCM_0_xpm_fifo_rst;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_xpm_fifo_rst is
@@ -20399,8 +20363,6 @@ entity design_1_axi_quad_spi_PLCM_0_slave_attachment is
     s_axi_araddr : in STD_LOGIC_VECTOR ( 4 downto 0 );
     s_axi_awaddr : in STD_LOGIC_VECTOR ( 4 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_slave_attachment : entity is "slave_attachment";
 end design_1_axi_quad_spi_PLCM_0_slave_attachment;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_slave_attachment is
@@ -21370,8 +21332,6 @@ entity design_1_axi_quad_spi_PLCM_0_xpm_fifo_base is
   attribute FULL_RESET_VALUE of design_1_axi_quad_spi_PLCM_0_xpm_fifo_base : entity is 0;
   attribute FULL_RST_VAL : string;
   attribute FULL_RST_VAL of design_1_axi_quad_spi_PLCM_0_xpm_fifo_base : entity is "1'b0";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_xpm_fifo_base : entity is "xpm_fifo_base";
   attribute PE_THRESH_ADJ : integer;
   attribute PE_THRESH_ADJ of design_1_axi_quad_spi_PLCM_0_xpm_fifo_base : entity is 8;
   attribute PE_THRESH_MAX : integer;
@@ -24135,8 +24095,6 @@ entity design_1_axi_quad_spi_PLCM_0_axi_lite_ipif is
     s_axi_araddr : in STD_LOGIC_VECTOR ( 4 downto 0 );
     s_axi_awaddr : in STD_LOGIC_VECTOR ( 4 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_axi_lite_ipif : entity is "axi_lite_ipif";
 end design_1_axi_quad_spi_PLCM_0_axi_lite_ipif;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_axi_lite_ipif is
@@ -24300,8 +24258,6 @@ entity design_1_axi_quad_spi_PLCM_0_xpm_fifo_async is
   attribute FIFO_WRITE_DEPTH of design_1_axi_quad_spi_PLCM_0_xpm_fifo_async : entity is 256;
   attribute FULL_RESET_VALUE : integer;
   attribute FULL_RESET_VALUE of design_1_axi_quad_spi_PLCM_0_xpm_fifo_async : entity is 0;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_xpm_fifo_async : entity is "xpm_fifo_async";
   attribute PROG_EMPTY_THRESH : integer;
   attribute PROG_EMPTY_THRESH of design_1_axi_quad_spi_PLCM_0_xpm_fifo_async : entity is 10;
   attribute PROG_FULL_THRESH : integer;
@@ -24768,8 +24724,6 @@ entity design_1_axi_quad_spi_PLCM_0_async_fifo_fg is
     \RATIO_OF_2_GENERATE.Shift_Reg_reg[0]_1\ : in STD_LOGIC;
     \RATIO_OF_2_GENERATE.Shift_Reg_reg[0]_2\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_async_fifo_fg : entity is "async_fifo_fg";
 end design_1_axi_quad_spi_PLCM_0_async_fifo_fg;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_async_fifo_fg is
@@ -25293,8 +25247,6 @@ entity design_1_axi_quad_spi_PLCM_0_qspi_core_interface is
     E : in STD_LOGIC_VECTOR ( 0 to 0 );
     \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[7]\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_qspi_core_interface : entity is "qspi_core_interface";
 end design_1_axi_quad_spi_PLCM_0_qspi_core_interface;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_qspi_core_interface is
@@ -26606,8 +26558,6 @@ entity design_1_axi_quad_spi_PLCM_0_axi_quad_spi_top is
     s_axi_araddr : in STD_LOGIC_VECTOR ( 4 downto 0 );
     s_axi_awaddr : in STD_LOGIC_VECTOR ( 4 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_axi_quad_spi_top : entity is "axi_quad_spi_top";
 end design_1_axi_quad_spi_PLCM_0_axi_quad_spi_top;
 
 architecture STRUCTURE of design_1_axi_quad_spi_PLCM_0_axi_quad_spi_top is
@@ -27163,8 +27113,6 @@ entity design_1_axi_quad_spi_PLCM_0_axi_quad_spi is
   attribute C_USE_STARTUP_EXT of design_1_axi_quad_spi_PLCM_0_axi_quad_spi : entity is 0;
   attribute C_XIP_MODE : integer;
   attribute C_XIP_MODE of design_1_axi_quad_spi_PLCM_0_axi_quad_spi : entity is 0;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_quad_spi_PLCM_0_axi_quad_spi : entity is "axi_quad_spi";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of design_1_axi_quad_spi_PLCM_0_axi_quad_spi : entity is "yes";
 end design_1_axi_quad_spi_PLCM_0_axi_quad_spi;

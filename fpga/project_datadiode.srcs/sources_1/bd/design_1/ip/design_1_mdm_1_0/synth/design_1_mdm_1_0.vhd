@@ -1,4 +1,4 @@
--- (c) Copyright 1995-2022 Xilinx, Inc. All rights reserved.
+-- (c) Copyright 1995-2023 Xilinx, Inc. All rights reserved.
 -- 
 -- This file contains confidential and proprietary information
 -- of Xilinx, Inc. and is protected under U.S. and
@@ -85,7 +85,16 @@ ENTITY design_1_mdm_1_0 IS
     Dbg_Shift_2 : OUT STD_LOGIC;
     Dbg_Update_2 : OUT STD_LOGIC;
     Dbg_Rst_2 : OUT STD_LOGIC;
-    Dbg_Disable_2 : OUT STD_LOGIC
+    Dbg_Disable_2 : OUT STD_LOGIC;
+    Dbg_Clk_3 : OUT STD_LOGIC;
+    Dbg_TDI_3 : OUT STD_LOGIC;
+    Dbg_TDO_3 : IN STD_LOGIC;
+    Dbg_Reg_En_3 : OUT STD_LOGIC_VECTOR(0 TO 7);
+    Dbg_Capture_3 : OUT STD_LOGIC;
+    Dbg_Shift_3 : OUT STD_LOGIC;
+    Dbg_Update_3 : OUT STD_LOGIC;
+    Dbg_Rst_3 : OUT STD_LOGIC;
+    Dbg_Disable_3 : OUT STD_LOGIC
   );
 END design_1_mdm_1_0;
 
@@ -1652,10 +1661,19 @@ ARCHITECTURE design_1_mdm_1_0_arch OF design_1_mdm_1_0 IS
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_mdm_1_0_arch : ARCHITECTURE IS "design_1_mdm_1_0,MDM,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF design_1_mdm_1_0_arch: ARCHITECTURE IS "design_1_mdm_1_0,MDM,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=mdm,x_ipVersion=3.2,x_ipCoreRevision=16,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=zynq,C_JTAG_CHAIN=2,C_USE_BSCAN=0,C_BSCANID=76547328,C_DEBUG_INTERFACE=0,C_USE_CONFIG_RESET=0,C_AVOID_PRIMITIVES=0,C_INTERCONNECT=2,C_MB_DBG_PORTS=3,C_USE_UART=0,C_DBG_REG_ACCESS=0,C_DBG_MEM_ACCESS=0,C_USE_CROSS_TRIGGER=0,C_EXT_TRIG_RESET_VALUE=0xF1234,C_TRACE_OUTPUT=0,C_TRACE_DATA_WIDTH=32,C_TRACE_CLK_FREQ_HZ=20" & 
+  ATTRIBUTE CORE_GENERATION_INFO OF design_1_mdm_1_0_arch: ARCHITECTURE IS "design_1_mdm_1_0,MDM,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=mdm,x_ipVersion=3.2,x_ipCoreRevision=16,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=zynq,C_JTAG_CHAIN=2,C_USE_BSCAN=0,C_BSCANID=76547328,C_DEBUG_INTERFACE=0,C_USE_CONFIG_RESET=0,C_AVOID_PRIMITIVES=0,C_INTERCONNECT=2,C_MB_DBG_PORTS=4,C_USE_UART=0,C_DBG_REG_ACCESS=0,C_DBG_MEM_ACCESS=0,C_USE_CROSS_TRIGGER=0,C_EXT_TRIG_RESET_VALUE=0xF1234,C_TRACE_OUTPUT=0,C_TRACE_DATA_WIDTH=32,C_TRACE_CLK_FREQ_HZ=20" & 
 "0000000,C_TRACE_CLK_OUT_PHASE=90,C_TRACE_ASYNC_RESET=0,C_TRACE_PROTOCOL=1,C_TRACE_ID=110,C_S_AXI_ADDR_WIDTH=4,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ACLK_FREQ_HZ=100000000,C_M_AXI_ADDR_WIDTH=32,C_M_AXI_DATA_WIDTH=32,C_M_AXI_THREAD_ID_WIDTH=1,C_ADDR_SIZE=32,C_DATA_SIZE=32,C_M_AXIS_DATA_WIDTH=32,C_M_AXIS_ID_WIDTH=7}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+  ATTRIBUTE X_INTERFACE_INFO OF Dbg_Disable_3: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_3 DISABLE";
+  ATTRIBUTE X_INTERFACE_INFO OF Dbg_Rst_3: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_3 RST";
+  ATTRIBUTE X_INTERFACE_INFO OF Dbg_Update_3: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_3 UPDATE";
+  ATTRIBUTE X_INTERFACE_INFO OF Dbg_Shift_3: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_3 SHIFT";
+  ATTRIBUTE X_INTERFACE_INFO OF Dbg_Capture_3: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_3 CAPTURE";
+  ATTRIBUTE X_INTERFACE_INFO OF Dbg_Reg_En_3: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_3 REG_EN";
+  ATTRIBUTE X_INTERFACE_INFO OF Dbg_TDO_3: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_3 TDO";
+  ATTRIBUTE X_INTERFACE_INFO OF Dbg_TDI_3: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_3 TDI";
+  ATTRIBUTE X_INTERFACE_INFO OF Dbg_Clk_3: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_3 CLK";
   ATTRIBUTE X_INTERFACE_INFO OF Dbg_Disable_2: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_2 DISABLE";
   ATTRIBUTE X_INTERFACE_INFO OF Dbg_Rst_2: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_2 RST";
   ATTRIBUTE X_INTERFACE_INFO OF Dbg_Update_2: SIGNAL IS "xilinx.com:interface:mbdebug:3.0 MBDEBUG_2 UPDATE";
@@ -1696,7 +1714,7 @@ BEGIN
       C_USE_CONFIG_RESET => 0,
       C_AVOID_PRIMITIVES => 0,
       C_INTERCONNECT => 2,
-      C_MB_DBG_PORTS => 3,
+      C_MB_DBG_PORTS => 4,
       C_USE_UART => 0,
       C_DBG_REG_ACCESS => 0,
       C_DBG_MEM_ACCESS => 0,
@@ -1985,11 +2003,19 @@ BEGIN
       Dbg_RDATA_2 => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 32)),
       Dbg_RRESP_2 => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 2)),
       Dbg_RVALID_2 => '0',
-      Dbg_TDO_3 => '0',
+      Dbg_Clk_3 => Dbg_Clk_3,
+      Dbg_TDI_3 => Dbg_TDI_3,
+      Dbg_TDO_3 => Dbg_TDO_3,
+      Dbg_Reg_En_3 => Dbg_Reg_En_3,
+      Dbg_Capture_3 => Dbg_Capture_3,
+      Dbg_Shift_3 => Dbg_Shift_3,
+      Dbg_Update_3 => Dbg_Update_3,
+      Dbg_Rst_3 => Dbg_Rst_3,
       Dbg_Trig_In_3 => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 8)),
       Dbg_Trig_Ack_Out_3 => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 8)),
       Dbg_TrData_3 => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 36)),
       Dbg_TrValid_3 => '0',
+      Dbg_Disable_3 => Dbg_Disable_3,
       Dbg_AWREADY_3 => '0',
       Dbg_WREADY_3 => '0',
       Dbg_BRESP_3 => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 2)),

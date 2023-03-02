@@ -6507,7 +6507,7 @@
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.MBDEBUG_3" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) &lt; 2)">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.MBDEBUG_3" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) &lt; 2)">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:busInterfaceInfo>
       </spirit:vendorExtensions>
@@ -30442,7 +30442,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:2065794e</spirit:value>
+            <spirit:value>9:6597eeb9</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -30453,7 +30453,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:2065794e</spirit:value>
+            <spirit:value>9:6597eeb9</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -30469,11 +30469,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Sep 27 09:20:57 UTC 2022</spirit:value>
+            <spirit:value>Thu Mar 02 11:56:54 UTC 2023</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:2065794e</spirit:value>
+            <spirit:value>9:6597eeb9</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -30496,7 +30496,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:43662ef1</spirit:value>
+            <spirit:value>9:d68d653d</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -30512,11 +30512,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Sep 27 09:20:57 UTC 2022</spirit:value>
+            <spirit:value>Thu Mar 02 11:56:54 UTC 2023</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:43662ef1</spirit:value>
+            <spirit:value>9:d68d653d</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -30530,11 +30530,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Sep 27 09:24:48 UTC 2022</spirit:value>
+            <spirit:value>Thu Mar 02 12:00:22 UTC 2023</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:2065794e</spirit:value>
+            <spirit:value>9:6597eeb9</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -42913,7 +42913,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Clk_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Clk_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -42933,7 +42933,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_TDI_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_TDI_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -42956,7 +42956,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_TDO_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_TDO_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -42980,7 +42980,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Reg_En_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Reg_En_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -43000,7 +43000,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Capture_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Capture_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -43020,7 +43020,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Shift_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Shift_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -43040,7 +43040,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Update_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Update_3" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) = 0))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -43060,7 +43060,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Rst_3" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) &lt; 2)">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Rst_3" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) &lt; 2)">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -43272,7 +43272,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Disable_3" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) &lt; 2)">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.Dbg_Disable_3" xilinx:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_MB_DBG_PORTS&apos;)) > 3) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_DEBUG_INTERFACE&apos;)) &lt; 2)">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -65007,7 +65007,7 @@
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_MB_DBG_PORTS</spirit:name>
         <spirit:displayName>Number of MicroBlaze debug ports</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_MB_DBG_PORTS" spirit:minimum="0" spirit:maximum="32" spirit:rangeType="long">3</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_MB_DBG_PORTS" spirit:minimum="0" spirit:maximum="32" spirit:rangeType="long">4</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_USE_UART</spirit:name>
@@ -65614,7 +65614,7 @@
     <spirit:parameter>
       <spirit:name>C_MB_DBG_PORTS</spirit:name>
       <spirit:displayName>Number of MicroBlaze debug ports</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_MB_DBG_PORTS" spirit:order="1000" spirit:configGroups="1 Debug" spirit:minimum="0" spirit:maximum="32" spirit:rangeType="long">3</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_MB_DBG_PORTS" spirit:order="1000" spirit:configGroups="1 Debug" spirit:minimum="0" spirit:maximum="32" spirit:rangeType="long">4</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>C_USE_UART</spirit:name>

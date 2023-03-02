@@ -1,7 +1,7 @@
 //Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-//Date        : Wed Dec 14 16:51:14 2022
+//Date        : Thu Mar  2 13:15:05 2023
 //Host        : DESKTOP-DRQ34CR running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -21,9 +21,13 @@ module design_1_wrapper
     PLCM_slave_clk,
     PLCM_slave_select,
     PLC_Ethernet_miso,
+    PLC_Ethernet_miso_b,
     PLC_Ethernet_mosi,
+    PLC_Ethernet_mosi_b,
     PLC_Ethernet_slave_clk,
+    PLC_Ethernet_slave_clk_b,
     PLC_Ethernet_slave_select,
+    PLC_Ethernet_slave_select_b,
     PLC_RS485_UART_rxd,
     PLC_RS485_UART_txd,
     PLC_RS485_Uart_Rx_disable_tri_o,
@@ -43,9 +47,13 @@ module design_1_wrapper
   output PLCM_slave_clk;
   output [0:0]PLCM_slave_select;
   input PLC_Ethernet_miso;
+  input PLC_Ethernet_miso_b;
   output PLC_Ethernet_mosi;
+  output PLC_Ethernet_mosi_b;
   output PLC_Ethernet_slave_clk;
+  output PLC_Ethernet_slave_clk_b;
   output [0:0]PLC_Ethernet_slave_select;
+  output [0:0]PLC_Ethernet_slave_select_b;
   input PLC_RS485_UART_rxd;
   output PLC_RS485_UART_txd;
   output [0:0]PLC_RS485_Uart_Rx_disable_tri_o;
@@ -72,9 +80,13 @@ module design_1_wrapper
   wire PLCM_slave_clk;
   wire [0:0]PLCM_slave_select;
   wire PLC_Ethernet_miso;
+  wire PLC_Ethernet_miso_b;
   wire PLC_Ethernet_mosi;
+  wire PLC_Ethernet_mosi_b;
   wire PLC_Ethernet_slave_clk;
+  wire PLC_Ethernet_slave_clk_b;
   wire [0:0]PLC_Ethernet_slave_select;
+  wire [0:0]PLC_Ethernet_slave_select_b;
   wire PLC_RS485_UART_rxd;
   wire PLC_RS485_UART_txd;
   wire [0:0]PLC_RS485_Uart_Rx_disable_tri_o;
@@ -126,9 +138,13 @@ module design_1_wrapper
         .PLCM_slave_clk(PLCM_slave_clk),
         .PLCM_slave_select(PLCM_slave_select),
         .PLC_Ethernet_miso(PLC_Ethernet_miso),
+        .PLC_Ethernet_miso_b(PLC_Ethernet_miso_b),
         .PLC_Ethernet_mosi(PLC_Ethernet_mosi),
+        .PLC_Ethernet_mosi_b(PLC_Ethernet_mosi_b),
         .PLC_Ethernet_slave_clk(PLC_Ethernet_slave_clk),
+        .PLC_Ethernet_slave_clk_b(PLC_Ethernet_slave_clk_b),
         .PLC_Ethernet_slave_select(PLC_Ethernet_slave_select),
+        .PLC_Ethernet_slave_select_b(PLC_Ethernet_slave_select_b),
         .PLC_RS485_UART_rxd(PLC_RS485_UART_rxd),
         .PLC_RS485_UART_txd(PLC_RS485_UART_txd),
         .PLC_RS485_Uart_Rx_disable_tri_o(PLC_RS485_Uart_Rx_disable_tri_o),
