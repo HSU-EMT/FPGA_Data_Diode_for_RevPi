@@ -1,0 +1,50 @@
+
+ PARAMETER VERSION = 2.2.0
+
+
+BEGIN OS
+ PARAMETER OS_NAME = standalone
+ PARAMETER OS_VER = 7.0
+ PARAMETER PROC_INSTANCE = microblaze_PLC_Ethernet_b
+END
+
+
+BEGIN PROCESSOR
+ PARAMETER DRIVER_NAME = cpu
+ PARAMETER DRIVER_VER = 2.9
+ PARAMETER HW_INSTANCE = microblaze_PLC_Ethernet_b
+ PARAMETER compiler_flags =  -mlittle-endian -mxl-soft-mul -mcpu=v11.0
+END
+
+
+BEGIN DRIVER
+ PARAMETER DRIVER_NAME = bram
+ PARAMETER DRIVER_VER = 4.3
+ PARAMETER HW_INSTANCE = axi_bram_ctrl_PLC_Ethernet_b
+END
+
+BEGIN DRIVER
+ PARAMETER DRIVER_NAME = spi
+ PARAMETER DRIVER_VER = 4.4
+ PARAMETER HW_INSTANCE = axi_quad_spi_PLC_Ethernet_b
+END
+
+BEGIN DRIVER
+ PARAMETER DRIVER_NAME = intc
+ PARAMETER DRIVER_VER = 3.9
+ PARAMETER HW_INSTANCE = microblaze_PLC_Ethernet_axi_intc_b
+END
+
+BEGIN DRIVER
+ PARAMETER DRIVER_NAME = bram
+ PARAMETER DRIVER_VER = 4.3
+ PARAMETER HW_INSTANCE = microblaze_PLC_Ethernet_local_memory_b_dlmb_bram_if_cntlr
+END
+
+BEGIN DRIVER
+ PARAMETER DRIVER_NAME = bram
+ PARAMETER DRIVER_VER = 4.3
+ PARAMETER HW_INSTANCE = microblaze_PLC_Ethernet_local_memory_b_ilmb_bram_if_cntlr
+END
+
+
