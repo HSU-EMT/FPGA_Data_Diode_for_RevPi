@@ -54,6 +54,24 @@ void Puls_detect(XGpio *Wire1_Ptr, XGpio *Wire2_Ptr, Init_Config_s *Init_Config_
 	u32 sniff1 = XGpio_DiscreteRead(Wire1_Ptr, 1);
 	u32 sniff2 = XGpio_DiscreteRead(Wire2_Ptr, 1);
 
+
+	if ((sniff1 == 1) && (sniff2 == 1) && (Init_Config_status->Puls_detected == 0)) {
+
+		usleep(1000);
+		sniff1 = XGpio_DiscreteRead(Wire1_Ptr, 1);
+		sniff2 = XGpio_DiscreteRead(Wire2_Ptr, 1);
+
+		if ((sniff1 == 1) && (sniff2 == 1) && (Init_Config_status->Puls_detected == 0)) {
+			usleep(10000);
+			sniff1 = XGpio_DiscreteRead(Wire1_Ptr, 1);
+			sniff2 = XGpio_DiscreteRead(Wire2_Ptr, 1);
+			if ((sniff1 == 1) && (sniff2 == 0) && (Init_Config_status->Puls_detected == 0)) {
+				Init_Config_status->Puls_detected = 1;
+			}
+		}
+	}
+
+    /*
 	if ((sniff1 == 1) && (sniff2 == 1) && (Init_Config_status->Puls_detected == 0)) {
 
 		usleep(100);
@@ -72,7 +90,7 @@ void Puls_detect(XGpio *Wire1_Ptr, XGpio *Wire2_Ptr, Init_Config_s *Init_Config_
 				Init_Config_status->Puls_detected = 1;
 			}
 		}
-	}
+	} */
 }
 
 
@@ -307,7 +325,8 @@ int Configuration_Comparing(Init_Config_s *Init_Config_status, XUartLite *UartLi
 	 */
 	if (Config_packet_index < Config_Paket_num) {
 		u8* MEM_BASE_HELP_REQ = MEM_DEVICE_CONF_REQ + 0x64*Config_packet_index; //step 100 bytes --> 0x64
-
+		u8* MEM_BASE_HELP_RES = MEM_DEVICE_CONF_RES + 0xA*Config_packet_index; //step 10 bytes --> 0x64
+		u8  Res_Help_buffer[BYTE_SIZE_CONFIG_RESPONSE];
 		/*
 		 * Data diode checks whether the system in OT was configured identically to the system in IT or not
 		 */
@@ -322,9 +341,23 @@ int Configuration_Comparing(Init_Config_s *Init_Config_status, XUartLite *UartLi
 				return CONFIG_FAILED;
 			}
 		}
-		usleep(100);
-		Config_packet_index += 1;
 
+
+		XGpio_DiscreteWrite(Pmod_Control.tx_enable_Ptr, 1, 1);
+		XGpio_DiscreteWrite(Pmod_Control.rx_disnable_Ptr, 1, 1);
+		usleep(100);
+
+		for (int i = 0; i < BYTE_SIZE_CONFIG_RESPONSE; i++){
+			Res_Help_buffer[i] = MEM_BASE_HELP_RES[i];
+		}
+
+		XUartLite_Send(UartLiteInstPtr, Res_Help_buffer, BYTE_SIZE_CONFIG_RESPONSE);
+		Pmod_Wait_Send_Data(Pmod_Control, UartLiteInstPtr, BYTE_SIZE_CONFIG_RESPONSE);
+
+		XGpio_DiscreteWrite(Pmod_Control.tx_enable_Ptr, 1, 0);
+		XGpio_DiscreteWrite(Pmod_Control.rx_disnable_Ptr, 1, 0);
+
+		Config_packet_index += 1;
 	}
 
 	if (Config_packet_index == Config_Paket_num){Init_Config_status->All_configured = 1;}
@@ -336,17 +369,13 @@ int Configuration_Comparing(Init_Config_s *Init_Config_status, XUartLite *UartLi
 
 
 
-int Exchange_Data(XGpio *Wire1_Ptr, XGpio *Wire2_Ptr, Init_Config_s *Init_Config_status, int *Ethernet_Config_status_Ptr, PacketTX_format *TXPacket_Ptr, PacketConfig_format* GatePacketConfig_Ptr){
-
+int Exchange_Data(int *Ethernet_Config_status_Ptr, PacketTX_format *TXPacket_Ptr, PacketConfig_format* GatePacketConfig_Ptr){
 
 	while(!(*Ethernet_Config_status_Ptr)){
 		Config_Phase(Ethernet_Config_status_Ptr, TXPacket_Ptr, GatePacketConfig_Ptr);
 	}
-
-	while(*Ethernet_Config_status_Ptr){
-
+	while((*MEM_RS_485_DATA_READY)&&(*Ethernet_Config_status_Ptr)){
 		Cyclically_Data_Exchange_PLCM(Ethernet_Config_status_Ptr, TXPacket_Ptr);
-		Puls_detect(Wire1_Ptr, Wire2_Ptr, Init_Config_status);
 	}
 
 	return SYSTEM_RESET;
@@ -357,9 +386,10 @@ int Exchange_Data(XGpio *Wire1_Ptr, XGpio *Wire2_Ptr, Init_Config_s *Init_Config
 int Read_Shared_Memory(u8* DataBuffer, u8* MEM_BASE_ADDRESS, int device_num){
 
 	int gateway_present = 0;
+	DataBuffer[0] = device_num;
 
 #ifdef MODE1
-	if ((*MEM_TOTAL_DATA_NUM > IO_PAYLOAD_SIZE)||(*MEM_BASE_GATEWAY_PRESENT)||(*MEM_BASE_GATEWAY_PRESENT_B)) {
+	if ((*MEM_TOTAL_RS_485_DATA_NUM > IO_PAYLOAD_SIZE)||(*MEM_BASE_GATEWAY_PRESENT)||(*MEM_BASE_GATEWAY_PRESENT_B)) {
 		// need to use mode 2
 		xil_printf("Oversize of process data. Change to use mode 2 instead");
 		return SYSTEM_FAILED;
@@ -368,7 +398,10 @@ int Read_Shared_Memory(u8* DataBuffer, u8* MEM_BASE_ADDRESS, int device_num){
 	if ((*MEM_BASE_GATEWAY_PRESENT)||(*MEM_BASE_GATEWAY_PRESENT_B)){
 		gateway_present = 1;
 		device_num = device_num - 1;
+		DataBuffer[0] = DataBuffer[0] | GATEWAY_EXIST_MASK;
 	}
+
+	DataBuffer += 1;
 
 	for (int i = 0; i < device_num; i++){
 		u8* HELP_ADDRESS = MEM_BASE_ADDRESS + 0x64*i;
@@ -384,15 +417,27 @@ int Read_Shared_Memory(u8* DataBuffer, u8* MEM_BASE_ADDRESS, int device_num){
 
 	if (gateway_present == 1) { //add data from gateway at the end
 
-		if((ETHERNET_SHARED_MEMORY_BASE[12] == 0x41) && (ETHERNET_SHARED_MEMORY_BASE[13] == 0x9C)){
+		if((ETHERNET_SHARED_MEMORY_BASE[6] == 0xC8) && (ETHERNET_SHARED_MEMORY_BASE[7] == 0x3E) && (ETHERNET_SHARED_MEMORY_BASE[8] == 0xA7)){ //Kunbus address header at https://hwaddress.com/oui-iab/C8-3E-A7/
 
-			memcpy(DataBuffer, ETHERNET_SHARED_MEMORY_BASE + HEADER_SIZE, IO_PAYLOAD_SIZE); //input packet from Kunbus devices
-			memcpy(DataBuffer + IO_PAYLOAD_SIZE, ETHERNET_B_SHARED_MEMORY_BASE + HEADER_SIZE, IO_PAYLOAD_SIZE); //output packet go to Kunbus devices
+			DataBuffer[0] = MEM_DEVICE_ADDRESS[device_num]; //address of gateway is always at the end of address list
+			DataBuffer[0] = DataBuffer[0] | RESPONSE_MASK;
+			DataBuffer += 1;
+			memcpy(DataBuffer, ETHERNET_SHARED_MEMORY_BASE + HEADER_SIZE + 1, IO_PAYLOAD_SIZE); //input packet from Kunbus devices, +1 because one dummy byte of kunbus packet. This byte does not exist in revpi packet
+			DataBuffer += IO_PAYLOAD_SIZE;
+			DataBuffer[0] = MEM_DEVICE_ADDRESS[device_num]; //address of gateway is always at the end of address list
+			DataBuffer += 1;
+			memcpy(DataBuffer, ETHERNET_B_SHARED_MEMORY_BASE + HEADER_SIZE, IO_PAYLOAD_SIZE); //revpi output packet go to Kunbus devices
 
-		} else if ((ETHERNET_B_SHARED_MEMORY_BASE[12] == 0x41) && (ETHERNET_B_SHARED_MEMORY_BASE[13] == 0x9C)) {
+		} else if ((ETHERNET_B_SHARED_MEMORY_BASE[6] == 0xC8) && (ETHERNET_B_SHARED_MEMORY_BASE[7] == 0x3E) && (ETHERNET_B_SHARED_MEMORY_BASE[8] == 0xA7)) {
 
-			memcpy(DataBuffer, ETHERNET_B_SHARED_MEMORY_BASE + HEADER_SIZE, IO_PAYLOAD_SIZE); //input packet from Kunbus devices
-			memcpy(DataBuffer + IO_PAYLOAD_SIZE, ETHERNET_SHARED_MEMORY_BASE + HEADER_SIZE, IO_PAYLOAD_SIZE); //output packet go to Kunbus devices
+			DataBuffer[0] = MEM_DEVICE_ADDRESS[device_num]; //address of gateway is always at the end of address list
+			DataBuffer[0] = DataBuffer[0] | RESPONSE_MASK;
+			DataBuffer += 1;
+			memcpy(DataBuffer, ETHERNET_B_SHARED_MEMORY_BASE + HEADER_SIZE + 1, IO_PAYLOAD_SIZE); //input packet from Kunbus devices
+			DataBuffer += IO_PAYLOAD_SIZE;
+			DataBuffer[0] = MEM_DEVICE_ADDRESS[device_num]; //address of gateway is always at the end of address list
+			DataBuffer += 1;
+			memcpy(DataBuffer, ETHERNET_SHARED_MEMORY_BASE + HEADER_SIZE, IO_PAYLOAD_SIZE); //revpi output packet go to Kunbus devices
 		}
 
 	}

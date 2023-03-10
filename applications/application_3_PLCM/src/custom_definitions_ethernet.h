@@ -39,6 +39,7 @@
 #define      MIN_PAYLOAD_SIZE		    	29
 #define      CONFIG_HEADER_SIZE		    	26
 #define      CONFIG_PAYLOAD_SIZE		    22
+#define      IO_RECEIVE_BUFFER_SIZE 		(IO_PAYLOAD_SIZE + HEADER_SIZE)
 
 #ifdef MODE1
 #define 	 GATEWAY_DIODE_ID		 		0x004F//79
@@ -69,10 +70,8 @@ typedef struct PacketTX_format{
 		// Data
 		u8 Data[];
 		}Fields;
-	} PacketTX_format; //total 543 Bytes
+	} PacketTX_format;
 #pragma pack(pop)
-
-
 
 #pragma pack(push,1)
 typedef struct PacketConfig_format{
@@ -102,7 +101,7 @@ typedef struct PacketConfig_format{
 	    //padding
 		u8 Data[CONFIG_BUFFER_SIZE - CONFIG_HEADER_SIZE - CONFIG_PAYLOAD_SIZE];
 		}Fields;
-	} PacketConfig_format; //total 543 Bytes
+	} PacketConfig_format;
 #pragma pack(pop)
 
 #endif /* SRC_CUSTOM_DEFINITIONS_ETHERNET_H_ */

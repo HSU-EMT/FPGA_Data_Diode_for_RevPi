@@ -6,25 +6,28 @@
  */
 
 #include <stdlib.h>
+#include <unistd.h>
+
 
 #include "custom_definitions_ethernet.h"
 #include "xil_types.h"
 #include "enc424j600.h"
-#include <unistd.h>
+
 #include "diode_ethernet_functions.h"
 #include "diode_plcm_functions.h"
 #include "shared_memory.h"
 #include "default_types.h"
 
 
-static u8 ConfigReadBuffer[CONFIG_BUFFER_SIZE] = {0x00};
+
 static u8 EmptyPacket[60] = {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xC8,0x3E,0xA7,0x00,0x4F,0x01,0x41,0x9C,0x01,0x01,0x01,0x00,};
 
-static int send_emptyGatePacket_status = 0, wait_count = 0;
-static u8 ReadBuffer[] = {0x00};
+static int wait_count = 0;
+static u8 ReadBuffer[IO_RECEIVE_BUFFER_SIZE] = {0x00};
 static u16 help_pointer;
 extern u8 currentBank;
 extern u16 nextPacketPointer;
+extern int send_emptyGatePacket_status;
 
 
 
@@ -43,7 +46,7 @@ PacketConfig_format* Init_ConfigPacket_Layers(u16 PAYLOAD_SIZE){
 	ConfigPacket->Fields.GatewayID = 0x9C41;					   // owned packet type
 	ConfigPacket->Fields.Ack = 0x00;
 	ConfigPacket->Fields.Counter = 0x00;
-	ConfigPacket->Fields.Cmd = 0x0002;
+	ConfigPacket->Fields.Cmd = 0x8001;
 	ConfigPacket->Fields.PayloadLength = CONFIG_PAYLOAD_SIZE;
 	ConfigPacket->Fields.Errors = 0x00000000;
 	ConfigPacket->Fields.Version = 0x00;
@@ -103,37 +106,43 @@ PacketTX_format* Init_Packet_Layers(u16 PAYLOAD_SIZE){
 
 void Config_Phase(int *Ethernet_Config_status, PacketTX_format *TXPacket, PacketConfig_format* GatePacketConfig){
 
+	u8 ConfigReadBuffer[CONFIG_BUFFER_SIZE] = {0x00};
 	if(send_emptyGatePacket_status == 0){
-
-		if (EmptyPacket[15] <= 0xFE){
-			EmptyPacket[15] += 0x01;
-		} else {EmptyPacket[15] = 0x01;}
-
 	enc424j600PacketSend(CONFIG_BUFFER_SIZE, EmptyPacket);
-
 	GatePacketConfig->Fields.Counter = EmptyPacket[15];
+		while((ConfigReadBuffer[12] != 0x41)&&(ConfigReadBuffer[13] != 0x9c)){
+				nextPacketPointer = enc424j600PacketReceive_Config(nextPacketPointer, ConfigReadBuffer);
+			}
+	} else {
+		nextPacketPointer = enc424j600PacketReceive_Config(nextPacketPointer, ConfigReadBuffer);
 	}
 
-	usleep(2000); // down speed of Zybo board to fit speed of pibridge
 
-	nextPacketPointer = enc424j600PacketReceive(nextPacketPointer, ConfigReadBuffer);
+		if ((ConfigReadBuffer[12] == 0x41)&&(ConfigReadBuffer[13] == 0x9c)&&(ConfigReadBuffer[16] == 0x01)){ //1. Byte of Command code for configuration packet
 
-	if (ConfigReadBuffer[16] == 0x01){ //1. Byte of Command code for configuration packet
+			if ((ConfigReadBuffer[17] == 0x00)&&(send_emptyGatePacket_status == 0)){ //2. Byte of Command code for configuration packet->empty packet from master arrives, need to answer to master
 
-		if (ConfigReadBuffer[17] == 0x00){ //2. Byte of Command code for configuration packet->empty packet from master arrives, need to answer to master
-			send_emptyGatePacket_status = 1; //stop cyclically send empty gate packets to master
-			GatePacketConfig->Fields.Ack = ConfigReadBuffer[15]; // Ack number
-			GatePacketConfig->Fields.Counter += 0x01;				 // Ctr number
-			enc424j600PacketSend(CONFIG_BUFFER_SIZE, ((u8*)GatePacketConfig));
+				send_emptyGatePacket_status = 1; //stop cyclically send empty gate packets to master
+				GatePacketConfig->Fields.Ack = ConfigReadBuffer[15]; // Ack number
+				GatePacketConfig->Fields.Counter += 0x01;				 // Ctr number
+				enc424j600PacketSend(CONFIG_BUFFER_SIZE, ((u8*)GatePacketConfig));
 
-		} else if (ConfigReadBuffer[17] == 0x80){ //config packet from master arrives, configuration done, change to cyclically data exchange phase
-			*Ethernet_Config_status = 1;
-			TXPacket->Fields.Ack     = ConfigReadBuffer[15];
-			TXPacket->Fields.Counter = GatePacketConfig->Fields.Counter + 0x01;
 
-			enc424j600PacketSend(TXPacket->Fields.DataLength + HEADER_SIZE, ((u8*)TXPacket)); //1ms
+			} else if (ConfigReadBuffer[17] == 0x80){ //config packet from master arrives, configuration done, change to cyclically data exchange phase
+				*Ethernet_Config_status = 1;
+
+				int status = Read_Shared_Memory(TXPacket->Fields.Data, RS485_SHARED_MEMORY_BASE, *MEM_DEVICE_NUM);
+				if (status != SYSTEM_SUCCESS){
+					 send_emptyGatePacket_status = 0;
+					 *Ethernet_Config_status = 0;
+				}
+				TXPacket->Fields.Ack     = ConfigReadBuffer[15];
+				TXPacket->Fields.Counter = GatePacketConfig->Fields.Counter + 0x01;
+				enc424j600PacketSend(TXPacket->Fields.DataLength + HEADER_SIZE, ((u8*)TXPacket));
+
+			}
 		}
-	}
+
 }
 
 void Cyclically_Data_Exchange_PLCM(int *Config_status, PacketTX_format *TXPacket){
@@ -151,6 +160,11 @@ void Cyclically_Data_Exchange_PLCM(int *Config_status, PacketTX_format *TXPacket
 				 *Config_status = 0;
 				 wait_count = 0;
 			}
+
+			//test
+			//for (int k = 0; k < 29; k++){
+			//	TXPacket->Fields.Data[k] = k;
+			//}
 
 			// answer to master
 			TXPacket->Fields.Ack = ReadBuffer[15];
@@ -200,13 +214,13 @@ void Write_data_to_Mem(u8* DataBuffer, int datasize, u8* MEM_BASE_ADDRESS){
 
 }
 
-void Read_data_from_Mem(u8* DataBuffer, int datalength, u8* MEM_BASE_ADDRESS){
+/*void Read_data_from_Mem(u8* DataBuffer, int datalength, u8* MEM_BASE_ADDRESS){
 
 	for(int i = 0; i< datalength; i++){
 		 DataBuffer[i] = MEM_BASE_ADDRESS[i];
 	}
 
-}
+}*/
 
 u8 increaseNum(u8 number) {
 	if (number < 0xFF) {

@@ -57,6 +57,7 @@
 #define RESPONSE_MASK 							    0x80 //first 1 bits
 #define INFOR_EXCHANGED_CODE    					0x0A
 #define ADDRESS_SETTING_CODE    					0x14
+#define ADDRESS_SETTING_CODE_SUCCESS    			0x40
 #define DIO_CONFIG_CODE    							0x20
 #define INIT_RES_START_CODE    						0x00
 #define INIT_REQ_START_CODE    						0x4D

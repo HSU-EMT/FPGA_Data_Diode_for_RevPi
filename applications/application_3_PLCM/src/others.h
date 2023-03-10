@@ -10,6 +10,8 @@
 
 #include "xspi.h"
 
+#define CLOCK_PRO_MS (XPAR_MICROBLAZE_CORE_CLOCK_FREQ_HZ/1000)
+
 void Reset_Variables();
 void Reset(int *val);
 int Pmod_Wait_Receive_Data(PmodRS485_Control Pmod_Control, XUartLite *UartLiteInstPtr, unsigned int byte_num);

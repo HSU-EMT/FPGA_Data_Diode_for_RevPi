@@ -7,6 +7,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/time.h>
 
@@ -45,6 +46,7 @@ int Infor_exchanged = 0;
 int config_count = 0;
 int Normal_operation = 1;
 int real_modul_initialized = 0;
+int send_emptyGatePacket_status = 0;
 
 u8 DataDiode_address = 0;
 u8 Device_address = 0;
@@ -181,45 +183,60 @@ int main()
 	 * Init Packet for transmitting
 	 */
 #ifdef MODE1
-u16      PAYLOAD_SIZE = 512;
-#else
-u16      DATA_SIZE = ((*MEM_TOTAL_DATA_NUM) + IO_PAYLOAD_SIZE*((*MEM_BASE_GATEWAY_PRESENT) + (*MEM_BASE_GATEWAY_PRESENT_B)));
-u16      PAYLOAD_SIZE = ((MIN_PAYLOAD_SIZE>DATA_SIZE)?MIN_PAYLOAD_SIZE:DATA_SIZE);
+	u16 PAYLOAD_SIZE = 512;
 #endif
 
-	PacketConfig_format* GatePacketConfig_Ptr = Init_ConfigPacket_Layers(PAYLOAD_SIZE);
-
-	PacketTX_format* TXPacket_Ptr = Init_Packet_Layers(PAYLOAD_SIZE);
-
-	/************************** COMMUNICATE ON PIBRIDGE ******************************/
 
 	while(Normal_operation){
+
+	while (!(*MEM_RS_485_DATA_READY)){}; //wait until the application 1 is ready
+	usleep(1000000); // wait 1s for the configuration phase of gateway on the ethernet channel in OT done
+
+#ifndef MODE1
+		u16 DATA_SIZE = ((u16)(*MEM_TOTAL_RS_485_DATA_NUM) + (IO_PAYLOAD_SIZE + 1)*((u16)(*MEM_BASE_GATEWAY_PRESENT) + (u16)(*MEM_BASE_GATEWAY_PRESENT_B)));
+		u16 PAYLOAD_SIZE = ((MIN_PAYLOAD_SIZE>DATA_SIZE)?MIN_PAYLOAD_SIZE:DATA_SIZE);
+#endif
+
+		PacketConfig_format* GatePacketConfig_Ptr = Init_ConfigPacket_Layers(PAYLOAD_SIZE);
+		PacketTX_format* TXPacket_Ptr = Init_Packet_Layers(PAYLOAD_SIZE);
+
+
+
+
 		/*
 		 * Wait until the pulse occurred. The pulse is created by RevPi Master
 		 * module to inform the Slaves about the start of initialization phase
 		 */
-		while(!Init_Config_status.Puls_detected){
+		/*while(!Init_Config_status.Puls_detected){
 			Puls_detect(&Wire1, &Wire2, &Init_Config_status);
 		}
+		if (Init_Config_status.Puls_detected == 1){
+			puls_index += 1;
+			Init_Config_status.Puls_detected = 0;
+
+		}*/
+
 
 		/*
 		 * After the pulse have occurred. The initialization phase on PiBridge
 		 * will be started. The Data Diode emulates all devices in OT and uses
 		 * data saved on the shared memory to initialize with RevPi Master
 		 */
-		Init_real_device(&Init_Config_status, &UartLiteInst, Pmod_Control);
+		/*Init_real_device(&Init_Config_status, &UartLiteInst, Pmod_Control);
 
+
+		XGpio_DiscreteWrite(&Wire2, 1, 0);
 		XGpio_SetDataDirection(&Wire2, 1, 1);
 		usleep(100);
 		XGpio_SetDataDirection(&Wire1, 1, 1);
-		usleep(1000);
+		usleep(1000);*/
 
 
 		/*
 		 * After the pulse have occurred and the initialization phase is done,
 		 * the configuration phase starts. Try to compare the configuration of 2 systems
 		 */
-		Status = Configuration_Comparing(&Init_Config_status, &UartLiteInst, Pmod_Control);
+		/*Status = Configuration_Comparing(&Init_Config_status, &UartLiteInst, Pmod_Control);
 		if (Status == CONFIG_FAILED) {
 			xil_printf("Configuration failed. The system in LAN must be identical the system in WAN: Exit");
 			Reset(&Init_Config_status.Puls_detected);
@@ -230,21 +247,22 @@ u16      PAYLOAD_SIZE = ((MIN_PAYLOAD_SIZE>DATA_SIZE)?MIN_PAYLOAD_SIZE:DATA_SIZE
 			Reset_Variables();
 		}
 
-		Init_Config_status.Puls_detected = 0;
-		while((Init_Config_status.All_configured)&&(!Init_Config_status.Puls_detected)){
+		//Init_Config_status.All_configured = 1;
+		*/
 
+		 /*we uncomment lines above because we don't configure the i/o module now.
+		This inconvenience comes from the bug here "https://revolutionpi.de/forum/viewtopic.php?p=12981#p12981"
+		If the i/o devices are initialized or configured, the process data from pi-bridge will overwrite the process image, what we don't want to happen.
+		This problem will be fixed when the next kernel of RevPi is released*/
 
-
-		Status = Exchange_Data(&Wire1, &Wire2, &Init_Config_status, &Ethernet_Config_status, TXPacket_Ptr, GatePacketConfig_Ptr);
-			/*
-			 * Handle with return value of the function Read_PiBridge_Write_OCM().
-			 */
-			if (Status == SYSTEM_RESET) {
-					xil_printf("IT system reset\r\n");
-					Reset_Variables();
-				}
-
-		}
+		Status = Exchange_Data(&Ethernet_Config_status, TXPacket_Ptr, GatePacketConfig_Ptr);
+		if (Status == SYSTEM_RESET){
+				xil_printf("IT system reset\r\n");
+				Ethernet_Config_status = 0;
+				send_emptyGatePacket_status = 0;
+				free(TXPacket_Ptr);
+				free(GatePacketConfig_Ptr);
+			}
 	 }
 
 	UartLiteDisableIntrSystem(&IntcInstance, UARTLITE_IRPT_INTR);

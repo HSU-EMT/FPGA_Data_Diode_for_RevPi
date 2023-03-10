@@ -125,7 +125,10 @@ void Collect_Information_Devices(XGpio *Wire1_Ptr, XGpio *Wire2_Ptr, Init_Config
 				Help_MEM_BASE[i + BYTE_SIZE_HEADER_INIT] = HelpDataBuffer[i];
 			}
 			Init_Config_status->Device_count +=1;
-		}else{;}
+		}else if  ((HelpBuffer[2] == ADDRESS_SETTING_CODE) && (HelpBuffer[3] == ADDRESS_SETTING_CODE_SUCCESS)){
+			u8* Help_MEM_ADDRESS_BASE = MEM_DEVICE_ADDRESS + 0x1*(Init_Config_status->Device_count - 1);
+			*Help_MEM_ADDRESS_BASE = HelpBuffer[1];
+		}
 
 		sniff1 = XGpio_DiscreteRead(Wire1_Ptr, 1);
 		sniff2 = XGpio_DiscreteRead(Wire2_Ptr, 1);
@@ -137,6 +140,10 @@ void Collect_Information_Devices(XGpio *Wire1_Ptr, XGpio *Wire2_Ptr, Init_Config
 	 * write the number of real module
 	 */
 	MEM_DEVICE_NUM[0] = Init_Config_status->Device_count;
+	if (Init_Config_status->Device_count == 0) {
+		*MEM_RS_485_DATA_READY = 0x01;
+		*MEM_TOTAL_RS_485_DATA_NUM = 0x00;
+	}
 
 }
 
@@ -341,7 +348,8 @@ int Read_PiBridge_Write_MDBRAM(Init_Config_s *Init_Config_status, XUartLite *Uar
 			switch(Device_address)
 			{
 			case 0x1F:
-				*MEM_TOTAL_DATA_NUM = total_data_length; // -1 because don't use CRC Check Byte an the end of frame
+				*MEM_TOTAL_RS_485_DATA_NUM = total_data_length;
+				*MEM_RS_485_DATA_READY = 0x01;
 				total_data_length = 0;
 				Write_data_to_MDBRAM(HeaderBuffer, sizeheader, DataBuffer, sizedata, MEM_REQ_1F);
 				break;
@@ -418,7 +426,7 @@ int Read_PiBridge_Write_MDBRAM(Init_Config_s *Init_Config_status, XUartLite *Uar
 				}
 			}
 
-		total_data_length += (sizeheader + sizedata - 1);
+		total_data_length += (sizeheader + sizedata - 1); // -1 because don't use CRC Check Byte an the end of frame
 		}
 	}
 	return SYSTEM_SUCCESS;

@@ -58,9 +58,10 @@
 #define DATA_LENGTH_MASK 							0x1F //last 5 bits
 #define COMMAND_MASK 							    0xE0 //first 3 bits
 #define RESPONSE_MASK 							    0x80 //first 1 bits
+#define GATEWAY_EXIST_MASK 							0x80 //first 1 bits
 #define INFOR_EXCHANGED_CODE    					0x0A
 #define ADDRESS_SETTING_CODE    					0x14
-#define GATEWAY_CONFIG_CODE    							0x20
+#define GATEWAY_CONFIG_CODE    						0x20
 #define INIT_RES_START_CODE    						0x00
 #define INIT_REQ_START_CODE    						0x4D
 #define BROADCAST_START_CODE    					0xFF

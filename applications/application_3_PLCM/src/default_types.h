@@ -40,6 +40,7 @@ typedef volatile unsigned long long VU64;
 #define SYSTEM_SUCCESS 				0x00000000
 #define SYSTEM_FAILED 				0x80000000
 #define SYSTEM_RESET   				0x80000001
+#define SYSTEM_PULS_DETECTED   		0x80000111
 #define CONFIG_FAILED   			0x80000010
 #define SYSTEM_TIME_OUT 			0x80000011
 

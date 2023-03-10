@@ -25,7 +25,7 @@ void DataDiode_Response_to_master(u8 DataDiode_address, u8 Command, XUartLite *U
 void Response_to_master(XUartLite *UartLiteInstPtr, u8* MEM_BASE_ADDRESS, PmodRS485_Control Pmod_Control);
 int Read_OCM_Write_PiBridge(Init_Config_s *Init_Config_status, u8 DataDiode_address, XUartLite *UartLiteInstPtr, PmodRS485_Control Pmod_Control, int *error_count);
 int Configuration_Comparing(Init_Config_s *Init_Config_status, XUartLite *UartLiteInstPtr, PmodRS485_Control Pmod_Control);
-int Exchange_Data(XGpio *Wire1_Ptr, XGpio *Wire2_Ptr, Init_Config_s *Init_Config_status, int *Ethernet_Config_status_Ptr, PacketTX_format *TXPacket_Ptr, PacketConfig_format* GatePacketConfig_Ptr);
+int Exchange_Data(int *Ethernet_Config_status_Ptr, PacketTX_format *TXPacket_Ptr, PacketConfig_format* GatePacketConfig_Ptr);
 void Write_Real_Request_to_Diode(u8 Device_address, u8* MEM_BASE_ADDRESS, u8* ResponseBuffer_Data_Exchange_Diode);
 u8 Crc_Cal(u8 * pi8uFrame_p, u16 i16uLen_p);
 int Read_Shared_Memory(u8* DataBuffer, u8* MEM_BASE_ADDRESS, int device_num);

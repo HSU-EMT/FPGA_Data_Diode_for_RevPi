@@ -16,7 +16,7 @@ void Config_Phase(int *Config_status, PacketTX_format *TXPacket, PacketConfig_fo
 void Cyclically_Data_Exchange_PLC(int *Config_status, PacketTX_format *TXPacket);
 void Cyclically_Data_Exchange_PLCM(int *Config_status, PacketTX_format *TXPacket);
 void Write_data_to_Mem(u8* DataBuffer, int datasize, u8* MEM_BASE_ADDRESS);
-void Read_data_from_Mem(u8* DataBuffer, int datalength, u8* MEM_BASE_ADDRESS);
+//void Read_data_from_Mem(u8* DataBuffer, int datalength, u8* MEM_BASE_ADDRESS);
 u8 increaseNum(u8 number);
 
 #endif /* SRC_DIODE_ETHERNET_FUNCTIONS_H_ */

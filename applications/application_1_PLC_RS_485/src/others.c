@@ -5,14 +5,16 @@
  *      Author: Ha
  */
 #include <sys/time.h>
+#include <stdio.h>
+#include <unistd.h>
+
 #include "xil_types.h"
 #include "custom_definitions.h"
 #include "xuartlite.h"
 #include "default_types.h"
 //#include "xtime_l.h"
-#include <stdio.h>
-#include <unistd.h>
 
+#include "shared_memory.h"
 
 
 
@@ -44,6 +46,7 @@ void Reset_Variables(){
 	Init_Config_status.Config_Req_Paket_count = 0;
 	Init_Config_status.Config_Res_Paket_count = 0;
 	error_count = 0;
+	*MEM_RS_485_DATA_READY = 0x00;
 }
 
 
