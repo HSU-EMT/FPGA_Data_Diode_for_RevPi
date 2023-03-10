@@ -126,7 +126,7 @@ For more details, please refer to the [Documentation](https://github.com/HSU-EMT
 
 <div align="center">
   <a href="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/blob/main/others/images/diagram.png">
-    <img src="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/blob/main/others/images/diagram.png" alt="schema" width="750" height="350">
+    <img src="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/blob/main/others/images/diagram.png" alt="schema" width="750" height="300">
   </a>
 </div>
 
