@@ -9,7 +9,7 @@
 #define SRC__MODE_DEFINE_H_
 
 
-#define MODE1 //uncomment to use mode 2
+//#define MODE1 //uncomment to use mode 2
 
 
 #endif /* SRC__MODE_DEFINE_H_ */
