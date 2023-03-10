@@ -9,7 +9,9 @@
     <img src="https://github.com/HSU-EMT/FPGA_Data_Diode_for_RevPi/blob/main/others/images/Logo_Emt.png" alt="Logo" width="180" height="80">
   </a>
 
-  <h3 align="center">A New Approach to Secure Industrial Automation Systems Based on Revolution Pi Modules</h3>
+  <h3 align="center">FPGA-based Unidirectional Propose to Separate
+OT-IT or Zones within OT Networks in Secure
+Industrial Automation Systems</h3>
 
   <p align="center">
     A puplication at ...
