@@ -1,7 +1,7 @@
 ### To create .ko file for driver:
 
 #### install kernel headers, which are required for the build
-sudo apt-get install -y raspberrypi-kernel-headers
+``sudo apt-get install -y raspberrypi-kernel-headers``
 
 #### clone and navigate to folder
 cd .../modified-piControl
