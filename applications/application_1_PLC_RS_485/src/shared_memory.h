@@ -40,15 +40,17 @@
 
 
 //memory parts of device information for 10 module, each reserves 100 bytes
-#define MEM_DEVICE_INFOR		((u8 *)(SHARED_BRAM_BASE_ADDRESS + 0x7D0))       // 2000-2999
+#define MEM_DEVICE_INFOR			((u8 *)(SHARED_BRAM_BASE_ADDRESS + 0x7D0))       // 2000-2999
 //memory parts of device number, one byte only
-#define MEM_DEVICE_NUM  		((int *)(SHARED_BRAM_BASE_ADDRESS + 0xBB8))      // 3000
-#define MEM_TOTAL_DATA_NUM  	((int *)(SHARED_BRAM_BASE_ADDRESS + 0xBBC))      // 3004
+#define MEM_DEVICE_NUM  			((int *)(SHARED_BRAM_BASE_ADDRESS + 0xBB8))      // 3000
+#define MEM_TOTAL_RS_485_DATA_NUM  	((int *)(SHARED_BRAM_BASE_ADDRESS + 0xBBC))      // 3004
+#define MEM_RS_485_DATA_READY  		((u8 *)(SHARED_BRAM_BASE_ADDRESS + 0xBC0))      // 3008
+#define MEM_DEVICE_ADDRESS  		((u8 *)(SHARED_BRAM_BASE_ADDRESS + 0xBC1))      // 3009-3019
 //memory to save configuration request and response of all devices
-#define MEM_DEVICE_CONF_REQ     ((u8 *)(SHARED_BRAM_BASE_ADDRESS + 0xC1C))       //3100-6099, because each can use up to 300 bytes maximal
-#define MEM_DEVICE_CONF_RES     ((u8 *)(SHARED_BRAM_BASE_ADDRESS + 0x17D4))       //6100-6399, because each can use up to 30 bytes maximal
+#define MEM_DEVICE_CONF_REQ     	((u8 *)(SHARED_BRAM_BASE_ADDRESS + 0xC1C))       //3100-6099, because each can use up to 300 bytes maximal
+#define MEM_DEVICE_CONF_RES     	((u8 *)(SHARED_BRAM_BASE_ADDRESS + 0x17D4))       //6100-6399, because each can use up to 30 bytes maximal
 //memory parts of configuration packet number, one byte only
-#define MEM_DEVICE_CONF_NUM  	((int *)(SHARED_BRAM_BASE_ADDRESS + 0x1838))      // 6200
+#define MEM_DEVICE_CONF_NUM  		((int *)(SHARED_BRAM_BASE_ADDRESS + 0x1838))      // 6200
 
 
 
