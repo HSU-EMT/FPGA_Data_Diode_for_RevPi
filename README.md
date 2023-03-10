@@ -139,13 +139,9 @@ For more details, please refer to the [Documentation](https://github.com/HSU-EMT
 <!-- Software -->
 #### Software
 
-1. Download or clone this repository.
-2. Open `project_1.xpr` with Vivado. All IP cores and pin assignments have been designed. Click the button ``Generate Bitstream``. After bitstream has been created. Click on ``File`` -> ``Export`` -> ``Export Hardware``. Navigate to the folder ``applications`` and check on ``Include Bitstream``. Then click ``OK``.
-3. Click on ``File`` -> ``Launch SDK``. Navigate to the folder ``applications`` for ``Exported location`` and ``Workspace``. Then click ``OK``. The SDK application will be opened.
-4. In SDK, click on ``File`` -> ``Open Projects From File System`` and add folder ``core0``, ``core0_bsp``, ``core1``, ``core1_bsp``in the folder ``applications`` into workspace.
-5. Right click on ``core1_bsp``. Select ``Board Support Package Setting``. There, add ``-DUSE_AMP`` for ``extra_compiler_flag`` of ``ps7_cortexa9_1``. This allows the use of interrupt controllers for multicore processors in Zynq, like [here](https://support.xilinx.com/s/article/62557?language=en_US).
-6. Run two applications ``main_core1.c`` on processor core 1 and ``main_core0.c`` on processor core 0. If you are not familiar with it, we recommend that you check it out [here](https://www.youtube.com/watch?v=n0hbwp36hBs&t=412s).
-7. Reset PLC and PLCM in PicTory. Note that PLC must be reset first. See [Documentation](https://github.com/HSU-EMT/DataDiode_based_on_RevolutionPI/blob/main/others/doc/README.md) for the reason.
+1. `fpga` folder contains vhdl codes for the fpga. All IP cores and pin assignments have been designed. User still need to ``Generate Bitstream`` and export ``hdf`` file in order to run ``application``.
+2. Folder ``applications`` contains application for Microblaze soft processors. Use SDK application to open and debug ``applications``.
+3. ``modified-piControl`` is the modified driver for pibridge. Use the ``Makefile`` to create ``.ko`` file for the driver. User also need to replace the exist ``.ko`` file on the Revolution pi PLCM with the new ``.ko`` file.  A look into the readme file is recommended.
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
