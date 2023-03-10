@@ -732,6 +732,7 @@ typedef union __attribute__((aligned(2), packed)) {
 /************************** Function Prototypes ENC424J600 *******************/
 void enc424j600Init(void);
 u16 enc424j600PacketReceive(u16 nextPacketPointer, u8* packet);
+u16 enc424j600PacketReceive_Config(u16 nextPacketPointer, u8* packet);
 void enc424j600PacketSend(u16 len, u8* packet);
 void enc424j600GetMACAddr(u8 addr[6]);
 void enc424j600SetMACAddr(void);

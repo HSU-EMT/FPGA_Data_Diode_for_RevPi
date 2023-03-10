@@ -143,7 +143,51 @@ u16 enc424j600PacketReceive(u16 currentPacketPointer, u8* packet) {
 	enc424j600ReadMemoryWindow(RX_WINDOW, (u8*) & statusVector, sizeof (statusVector));
 
 	//    if (statusVector.bits.ByteCount <= len) len = statusVector.bits.ByteCount;
-	len = (statusVector.bits.ByteCount <= (HEADER_SIZE + IO_PAYLOAD_SIZE + 4)) ? statusVector.bits.ByteCount - 4 : 0;
+	len = (statusVector.bits.ByteCount <= IO_RECEIVE_BUFFER_SIZE + 4) ? statusVector.bits.ByteCount - 4 : 0;
+	enc424j600ReadMemoryWindow(RX_WINDOW, packet, len);
+
+	//for(int i = 0; i < len; i++){
+	//	xil_printf(" 0x%02X",packet[i]);
+	//}
+	//xil_printf("\r\n");
+
+
+	newRXTail = nextPacketPointer - 2;
+	//Special situation if nextPacketPointer is exactly RXSTART
+	if (nextPacketPointer == ENC424J600_RXSTART)
+		newRXTail = ENC424J600_RAMSIZE - 2;
+
+	//Packet decrement
+	enc424j600BFSReg(ECON1, ECON1_PKTDEC);
+
+	//Write new RX tail
+	enc424j600WriteReg(ERXTAIL, newRXTail);
+
+	return nextPacketPointer;
+}
+
+
+u16 enc424j600PacketReceive_Config(u16 currentPacketPointer, u8* packet) {
+	u16 len;
+	u16 newRXTail;
+	RXSTATUS statusVector;
+
+	if (!(enc424j600ReadReg(EIR) & EIR_PKTIF)) {
+		return currentPacketPointer;
+	}
+
+
+	// Tell to Master where is the Window Read Pointer to the beginning of the receive buffer
+	// alternative for function enc424j600WriteReg(ERXRDPT, currentPacketPointer);
+	enc424j600ExecuteOp16(WRXRDPT, currentPacketPointer);
+
+	enc424j600ReadMemoryWindow(RX_WINDOW, (u8*) & nextPacketPointer, sizeof (nextPacketPointer));
+
+
+	enc424j600ReadMemoryWindow(RX_WINDOW, (u8*) & statusVector, sizeof (statusVector));
+
+	//    if (statusVector.bits.ByteCount <= len) len = statusVector.bits.ByteCount;
+	len = (statusVector.bits.ByteCount <= CONFIG_BUFFER_SIZE + 4) ? statusVector.bits.ByteCount - 4 : 0;
 	enc424j600ReadMemoryWindow(RX_WINDOW, packet, len);
 
 	//for(int i = 0; i < len; i++){
