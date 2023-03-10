@@ -140,8 +140,8 @@ For more details, please refer to the [Documentation](https://github.com/HSU-EMT
 #### Software
 
 1. `fpga` folder contains vhdl codes for the fpga. All IP cores and pin assignments have been designed. User still need to ``Generate Bitstream`` and export ``hdf`` file in order to run ``application``.
-2. Folder ``applications`` contains application for Microblaze soft processor. Use SDK application to open and debug ``applications``.
-3. ``modified-piControl`` is the modified driver for pibridge. Use the ``Makefile`` to create ``.ko`` file for the driver. Use also need to replace the exist ``.ko`` file on the Revolution pi PLCM with the new ``.ko`` file.  A look into the readme file is recommended.
+2. Folder ``applications`` contains application for Microblaze soft processors. Use SDK application to open and debug ``applications``.
+3. ``modified-piControl`` is the modified driver for pibridge. Use the ``Makefile`` to create ``.ko`` file for the driver. User also need to replace the exist ``.ko`` file on the Revolution pi PLCM with the new ``.ko`` file.  A look into the readme file is recommended.
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
